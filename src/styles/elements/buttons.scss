@@ -1,0 +1,4 @@
+.btn {
+  font-size: map-get($app-sizes, font-size-m);
+  margin: map-get($app-sizes, small);
+}
