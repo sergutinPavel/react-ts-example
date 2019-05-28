@@ -1,4 +1,4 @@
-import {action} from 'typesafe-actions'
+import {action} from 'typesafe-actions';
 
 export enum ActionTypes {
   TOGGLE_SIDEBAR = '[general] TOGGLE_SIDEBAR',

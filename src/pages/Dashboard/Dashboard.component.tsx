@@ -9,6 +9,9 @@ import {
   ExampleAction,
   ToggleSidebarAction
 } from "../../store/general/general.actions";
+import {
+  LoginAction
+} from "../../store/auth/auth.actions";
 import { history } from "../../store";
 
 interface IConnectedState {
@@ -18,6 +21,7 @@ interface IConnectedState {
 interface IConnectedDispatch {
   toggleSidebar: any;
   exampleAction: any;
+  login: any;
 }
 interface IOwnProps extends IConnectedState, IConnectedDispatch {
   [key: string]: any;
@@ -29,7 +33,8 @@ const mapStateToProps = (state: IApplicationState): IConnectedState => ({
 });
 const mapDispatchToProps = (dispatch: Dispatch): IConnectedDispatch => ({
   toggleSidebar: () => dispatch(ToggleSidebarAction()),
-  exampleAction: () => dispatch(ExampleAction())
+  exampleAction: () => dispatch(ExampleAction()),
+  login: (payload: any) => dispatch(LoginAction(payload)),
 });
 
 class DashboardComponent extends React.Component<IOwnProps, any> {
@@ -54,13 +59,20 @@ class DashboardComponent extends React.Component<IOwnProps, any> {
     history.push(url);
   };
 
-  public render() {
+  login = () => {
+    this.props.login({ email: '111', password: '222' })
+  };
+
+  render() {
     console.log('this', this);
     return (
       <div className={"app-layout__page"}
            // onClick={this.navigateTo}
       >
         DashboardComponent
+        <a onClick={this.login}>
+          login
+        </a>
       </div>
     )
   }
