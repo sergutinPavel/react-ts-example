@@ -16,7 +16,7 @@ export const API = (params: any) => {
 
   return axios({
     ...params,
-    baseURL: `${process.env.REACT_APP_API_ENDPOINT}`,
+    baseURL: `${(process.env as any).REACT_APP_API_ENDPOINT}`,
     headers,
   });
 };

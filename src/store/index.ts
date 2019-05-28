@@ -1,20 +1,21 @@
 import {createStore, applyMiddleware, Store} from "redux";
 import {composeWithDevTools} from "redux-devtools-extension";
 import {routerMiddleware} from "react-router-redux";
-import {createEpicMiddleware} from "redux-observable";
 import {createLogger} from "redux-logger";
 import createHistory from "history/createBrowserHistory";
 import RootReducer, {IApplicationState} from "./root.reducer";
-import {rootEffects} from "./root.effects";
+import createSagaMiddleware from "redux-saga";
+import rootSaga from "./root.effects"
 
 
 export const history = createHistory();
 
 const routingMW = routerMiddleware(history);
-const epicMiddleware = createEpicMiddleware();
-let middleware = [epicMiddleware, routingMW];
 
-if (process.env.NODE_ENV !== 'production') {
+const sagaMiddleware = createSagaMiddleware();
+let middleware = [sagaMiddleware, routingMW];
+
+if ((process.env as any).NODE_ENV !== 'production') {
   const logger = createLogger();
   middleware = [...middleware, logger];
 }
@@ -25,7 +26,7 @@ const createApplicationStore: Store<IApplicationState> = (() => {
     {},
     composeWithDevTools(applyMiddleware(...middleware)),
   );
-  epicMiddleware.run((rootEffects as any));
+  sagaMiddleware.run(rootSaga);
 
   return store;
 })();

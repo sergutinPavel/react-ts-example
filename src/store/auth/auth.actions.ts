@@ -1,9 +1,9 @@
 import {action} from 'typesafe-actions';
 
 export enum ActionTypes {
-  LOGIN_ACTION = '[general] LOGIN_ACTION',
-  LOGIN_ACTION_SUCCESS = '[general] LOGIN_ACTION_SUCCESS',
-  LOGIN_ACTION_ERROR = '[general] LOGIN_ACTION_ERROR'
+  LOGIN_ACTION = '[auth] LOGIN_ACTION',
+  LOGIN_ACTION_SUCCESS = '[auth] LOGIN_ACTION_SUCCESS',
+  LOGIN_ACTION_ERROR = '[auth] LOGIN_ACTION_ERROR'
 }
 
 export const LoginAction = (payload?: any) => {
