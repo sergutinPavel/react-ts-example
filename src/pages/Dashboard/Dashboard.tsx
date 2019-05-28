@@ -37,7 +37,7 @@ const mapDispatchToProps = (dispatch: Dispatch): IConnectedDispatch => ({
   login: (payload: any) => dispatch(LoginAction(payload)),
 });
 
-class DashboardComponent extends React.Component<IOwnProps, any> {
+class Dashboard extends React.Component<IOwnProps, any> {
   constructor(props: IOwnProps) {
     super(props);
   }
@@ -60,7 +60,7 @@ class DashboardComponent extends React.Component<IOwnProps, any> {
   };
 
   login = () => {
-    this.props.login({ email: '111', password: '222' })
+    this.props.login({ email: 'admin@cronix.ms', password: '111111' })
   };
 
   render() {
@@ -78,4 +78,4 @@ class DashboardComponent extends React.Component<IOwnProps, any> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

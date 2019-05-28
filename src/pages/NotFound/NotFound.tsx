@@ -1,6 +1,6 @@
 import * as React from "react";
 
-class NotFoundComponent extends React.Component<any, any> {
+class NotFound extends React.Component<any, any> {
 
   public render() {
     return (
@@ -17,4 +17,4 @@ class NotFoundComponent extends React.Component<any, any> {
   }
 }
 
-export default NotFoundComponent;
+export default NotFound;

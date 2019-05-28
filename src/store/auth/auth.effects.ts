@@ -1,20 +1,23 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
-import { ActionTypes, LoginActionFail } from "./auth.actions";
+import { ActionTypes } from "./auth.actions";
 import { API } from "../../utils/httpRequests";
 
-function* loginSaga(payload: any) {
+function* loginSaga(action: any) {
   try {
-    const response = yield call(API, {
+    const {data} = yield call(API, {
       method: 'post',
       url: '/login',
-      data: payload
+      data: action.payload
     });
 
-    yield [
-      put({type: ActionTypes.LOGIN_ACTION_SUCCESS, payload: response.response.data})
-    ];
+    if (data && data.access_token) {
+      localStorage.setItem('access_token', JSON.stringify(data.access_token));
+    }
+    // console.warn('success', data, data.access_token);
+    yield put({type: ActionTypes.LOGIN_ACTION_SUCCESS, payload: data.access_token});
   } catch (error) {
-    yield put(LoginActionFail(error.response.data));
+    // console.warn('error', error);
+    yield put({type: ActionTypes.LOGIN_ACTION_ERROR, payload: error.response.data});
   }
 
 }

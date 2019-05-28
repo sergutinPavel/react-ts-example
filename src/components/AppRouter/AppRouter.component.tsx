@@ -7,9 +7,21 @@ import { AuthRoute } from "./RoutingProtection/AuthRoute";
 // pages
 import AppHeaderComponent from "../AppHeader/AppHeader.component";
 import AppAuthComponent from "../AppAuth/AppAuth.component";
-import NotFoundComponent from "../../pages/NotFound/NotFound.component";
-import DashboardComponent from "../../pages/Dashboard/Dashboard.component";
-import HomeComponent from "../../pages/Home/Home.component";
+import NotFound from "../../pages/NotFound/NotFound";
+import DashboardComponent from "../../pages/Dashboard/Dashboard";
+import Home from "../../pages/Home/Home";
+import {IApplicationState, selectToken} from "../../store/root.reducer";
+import {connect} from "react-redux";
+
+interface IConnectedState {
+  isAuthorised: boolean;
+}
+interface IOwnProps extends IConnectedState {
+  [key: string]: any;
+}
+const mapStateToProps = (state: IApplicationState): IConnectedState => ({
+  isAuthorised: !!selectToken(state),
+});
 
 const RootRoutes: React.SFC<any> = () => {
   return (
@@ -17,22 +29,20 @@ const RootRoutes: React.SFC<any> = () => {
       <AppHeaderComponent />
       <Switch>
         <Route path="/dashboard" component={DashboardComponent} exact={true} />
-        <Route path="/home" component={HomeComponent} exact={true} />
+        <Route path="/home" component={Home} exact={true} />
         <Route path="/promotion" component={DashboardComponent} exact={true} />
-        <Route path="/shop" component={HomeComponent} exact={true} />
-        <Route path="/not-found" component={NotFoundComponent} />
+        <Route path="/shop" component={Home} exact={true} />
+        <Route path="/not-found" component={NotFound} />
         <Redirect to="/not-found" />
       </Switch>
     </>
   );
 };
 
-const AppRouterComponent: React.SFC<any> = (props?) => {
+const AppRouterComponent: React.SFC<any> = (props: IOwnProps) => {
   console.warn('process.env', process.env, props);
-  // todo: 1. create auth store
-  // todo: 2. get auth status from the store
-  //   HARDCODE YO
-  const isAuthorised = true;
+
+  const { isAuthorised } = props;
   return (
     <div className={"app-layout"}>
       <Switch>
@@ -46,4 +56,4 @@ const AppRouterComponent: React.SFC<any> = (props?) => {
   );
 };
 
-export default AppRouterComponent;
+export default connect(mapStateToProps, null)(AppRouterComponent);
