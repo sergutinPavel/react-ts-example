@@ -11,7 +11,7 @@ export const AuthRoute: React.SFC<any> = ({ component: Component, is_not_authori
         ? <Component {...props} />
         : <Redirect
           to={{
-            pathname: '/home',
+            pathname: '/dashboard',
             state: { from: props.location }
           }}
         />}

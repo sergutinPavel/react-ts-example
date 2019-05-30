@@ -1,6 +1,6 @@
 // libs
 import * as React from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 // routing protection
 import { PrivateRoute } from "./RoutingProtection/PrivateRoute";
 import { AuthRoute } from "./RoutingProtection/AuthRoute";
@@ -28,10 +28,11 @@ const RootRoutes: React.SFC<any> = () => {
     <>
       <AppHeaderComponent />
       <Switch>
+        {/*<Redirect from="/" to="/dashboard" exact={true} />*/}
         <Route path="/dashboard" component={DashboardComponent} exact={true} />
         <Route path="/home" component={Home} exact={true} />
-        <Route path="/promotion" component={DashboardComponent} exact={true} />
-        <Route path="/shop" component={Home} exact={true} />
+        {/*<Route path="/promotion" component={DashboardComponent} exact={true} />*/}
+        {/*<Route path="/shop" component={Home} exact={true} />*/}
         <Route path="/not-found" component={NotFound} />
         <Redirect to="/not-found" />
       </Switch>
@@ -40,9 +41,10 @@ const RootRoutes: React.SFC<any> = () => {
 };
 
 const AppRouterComponent: React.SFC<any> = (props: IOwnProps) => {
-  console.warn('process.env', process.env, props);
 
   const { isAuthorised } = props;
+  console.warn('process.env', process.env, props);
+  // const isAuthorised = true;
   return (
     <div className={"app-layout"}>
       <Switch>
@@ -56,4 +58,4 @@ const AppRouterComponent: React.SFC<any> = (props: IOwnProps) => {
   );
 };
 
-export default connect(mapStateToProps, null)(AppRouterComponent);
+export default withRouter(connect(mapStateToProps)(AppRouterComponent));
